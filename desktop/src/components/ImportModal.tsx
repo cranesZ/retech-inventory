@@ -156,6 +156,16 @@ export function ImportModal({ onImport, onCancel }: ImportModalProps) {
           {step === 'upload' && (
             <div className="upload-section">
               <p>Select an Excel (.xlsx, .xls) or CSV file to import devices.</p>
+              <div style={{ marginBottom: '1rem' }}>
+                <a
+                  href="/Excel-Template.xlsx"
+                  download="Retech-Inventory-Template.xlsx"
+                  className="secondary"
+                  style={{ textDecoration: 'none', display: 'inline-block', padding: '0.5rem 1rem', marginBottom: '1rem' }}
+                >
+                  📥 Download Template
+                </a>
+              </div>
               <input
                 type="file"
                 accept=".xlsx,.xls,.csv"

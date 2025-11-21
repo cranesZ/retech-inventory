@@ -501,23 +501,18 @@ function DeviceModal({ device, onSave, onCancel, isSaving = false }: DeviceModal
             </button>
           </div>
 
-          <div className="modal-body">
+          <div className="modal-body" style={{ maxHeight: '70vh', overflowY: 'auto' }}>
             <div className="form-row">
-              <div className="form-group">
-                <label>ESN</label>
+              <div className="form-group" style={{ gridColumn: '1 / -1' }}>
+                <label>IMEI/ESN</label>
                 <input
                   type="text"
-                  value={formData.esn || ''}
-                  onChange={e => handleChange('esn', e.target.value)}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>IMEI</label>
-                <input
-                  type="text"
-                  value={formData.imei || ''}
-                  onChange={e => handleChange('imei', e.target.value)}
+                  value={formData.imei || formData.esn || ''}
+                  onChange={e => {
+                    handleChange('imei', e.target.value);
+                    handleChange('esn', e.target.value);
+                  }}
+                  placeholder="Enter device IMEI or ESN"
                 />
               </div>
             </div>
