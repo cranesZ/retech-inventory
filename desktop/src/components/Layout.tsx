@@ -73,9 +73,9 @@ const Layout: React.FC = () => {
 
         <div className="sidebar-footer">
           <div className="user-profile">
-            <div className="user-avatar">{user?.name?.charAt(0).toUpperCase() || 'U'}</div>
+            <div className="user-avatar">{user?.full_name?.charAt(0).toUpperCase() || user?.email?.charAt(0).toUpperCase() || 'U'}</div>
             <div className="user-info">
-              <p className="user-name">{user?.name || 'User'}</p>
+              <p className="user-name">{user?.full_name || user?.email || 'User'}</p>
               <p className="user-role">{user?.email || 'user@example.com'}</p>
             </div>
           </div>

@@ -199,7 +199,7 @@ autoUpdater.on('update-downloaded', (info: any) => {
     message: `Version ${info.version} has been downloaded.`,
     detail: 'The application will restart to install the update.',
     buttons: ['Restart Now', 'Later']
-  }).then((result) => {
+  }).then((result: { response: number }) => {
     if (result.response === 0) {
       // Quit and install immediately
       autoUpdater.quitAndInstall(false, true);
