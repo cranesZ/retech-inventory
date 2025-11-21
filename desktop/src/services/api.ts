@@ -106,7 +106,16 @@ export async function signout(): Promise<void> {
 }
 
 export async function getProfile(): Promise<UserProfile> {
-  return apiRequest<UserProfile>('/auth/profile');
+  const response = await apiRequest<{ user: any; profile: any }>('/auth/profile');
+
+  // Transform nested backend response to flattened frontend structure
+  return {
+    id: response.user.id,
+    email: response.user.email,
+    full_name: response.profile?.full_name || response.user.user_metadata?.full_name || '',
+    role: response.profile?.role || 'user',
+    profile: response.profile
+  };
 }
 
 // ============================================
