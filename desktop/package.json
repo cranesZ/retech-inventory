@@ -1,7 +1,7 @@
 {
   "name": "retech-inventory",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "main": "dist-electron/main.cjs",
   "description": "Retech Inventory Management System - Desktop Application",
@@ -28,6 +28,7 @@
     "package:linux": "npm run build && electron-builder build --linux"
   },
   "dependencies": {
+    "electron-updater": "^6.3.9",
     "lucide-react": "^0.554.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
