@@ -9,7 +9,6 @@ export interface Device {
   network?: string;
   capacity?: string;
   color?: string;
-  esn?: string;
   imei?: string;
   quantity: number;
   grade?: DeviceGrade;

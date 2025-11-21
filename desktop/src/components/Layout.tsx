@@ -23,6 +23,8 @@ const Layout: React.FC = () => {
   const navigate = useNavigate();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
+  console.log('🔍 Layout - User object:', user);
+
   const handleLogout = async () => {
     await logout();
     navigate('/login');
@@ -51,7 +53,7 @@ const Layout: React.FC = () => {
           <div className="logo-container">
             <div className="logo-text">
               <div className="logo-title">RETECH</div>
-              <div className="logo-subtitle">INVENTORY SYSTEMS</div>
+              <div className="logo-subtitle">INVENTORY SYSTEMS • v1.0.2</div>
             </div>
           </div>
         </div>

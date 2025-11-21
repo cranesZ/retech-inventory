@@ -369,23 +369,24 @@ export default function Inventory() {
           </div>
         ) : (
           <div className="card">
-            <table>
-              <thead>
-                <tr>
-                  <th>IMEI/ESN</th>
-                  <th>MANUFACTURER</th>
-                  <th>MODEL</th>
-                  <th>VARIANT</th>
-                  <th>NETWORK</th>
-                  <th>CAPACITY</th>
-                  <th>COLOR</th>
-                  <th>GRADE</th>
-                  <th>QTY</th>
-                  <th>STATUS</th>
-                  <th>PRICE PAID</th>
-                  <th>ACTIONS</th>
-                </tr>
-              </thead>
+            <div className="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>IMEI/ESN</th>
+                    <th>MANUFACTURER</th>
+                    <th>MODEL</th>
+                    <th>VARIANT</th>
+                    <th>NETWORK</th>
+                    <th>CAPACITY</th>
+                    <th>COLOR</th>
+                    <th>GRADE</th>
+                    <th>QTY</th>
+                    <th>STATUS</th>
+                    <th>PRICE PAID</th>
+                    <th>ACTIONS</th>
+                  </tr>
+                </thead>
               <tbody>
                 {filteredDevices.map(device => (
                   <tr key={device.id}>
@@ -434,6 +435,7 @@ export default function Inventory() {
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
         )}
       </div>
@@ -507,11 +509,8 @@ function DeviceModal({ device, onSave, onCancel, isSaving = false }: DeviceModal
                 <label>IMEI/ESN</label>
                 <input
                   type="text"
-                  value={formData.imei || formData.esn || ''}
-                  onChange={e => {
-                    handleChange('imei', e.target.value);
-                    handleChange('esn', e.target.value);
-                  }}
+                  value={formData.imei || ''}
+                  onChange={e => handleChange('imei', e.target.value)}
                   placeholder="Enter device IMEI or ESN"
                 />
               </div>
