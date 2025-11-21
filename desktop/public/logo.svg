@@ -1,0 +1,87 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0066CC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0052A3;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0099CC;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle for visual balance -->
+  <circle cx="256" cy="256" r="256" fill="#F5F7FA"/>
+
+  <!-- Main container/warehouse box -->
+  <g id="main-box">
+    <!-- Box body -->
+    <rect x="80" y="140" width="280" height="240" rx="12" fill="url(#blueGradient)" stroke="none"/>
+
+    <!-- Box highlight/top edge -->
+    <rect x="80" y="140" width="280" height="30" rx="12" fill="#0080E8" opacity="0.3"/>
+
+    <!-- Left shelf -->
+    <rect x="100" y="190" width="80" height="40" rx="6" fill="url(#accentGradient)"/>
+    <rect x="105" y="195" width="70" height="30" rx="4" fill="#FFFFFF" opacity="0.2"/>
+
+    <!-- Center shelf -->
+    <rect x="216" y="190" width="80" height="40" rx="6" fill="url(#accentGradient)"/>
+    <rect x="221" y="195" width="70" height="30" rx="4" fill="#FFFFFF" opacity="0.2"/>
+
+    <!-- Right shelf (partial) -->
+    <rect x="332" y="190" width="48" height="40" rx="6" fill="url(#accentGradient)"/>
+    <rect x="337" y="195" width="38" height="30" rx="4" fill="#FFFFFF" opacity="0.2"/>
+
+    <!-- Lower shelf left -->
+    <rect x="100" y="260" width="80" height="40" rx="6" fill="url(#accentGradient)"/>
+    <rect x="105" y="265" width="70" height="30" rx="4" fill="#FFFFFF" opacity="0.2"/>
+
+    <!-- Lower shelf center -->
+    <rect x="216" y="260" width="80" height="40" rx="6" fill="url(#accentGradient)"/>
+    <rect x="221" y="265" width="70" height="30" rx="4" fill="#FFFFFF" opacity="0.2"/>
+
+    <!-- Lower shelf right -->
+    <rect x="332" y="260" width="48" height="40" rx="6" fill="url(#accentGradient)"/>
+    <rect x="337" y="265" width="38" height="30" rx="4" fill="#FFFFFF" opacity="0.2"/>
+
+    <!-- Inventory items (boxes) on shelves -->
+    <!-- Top left item -->
+    <g>
+      <rect x="112" y="202" width="18" height="18" rx="2" fill="#FFFFFF" opacity="0.6"/>
+      <rect x="116" y="206" width="4" height="4" rx="1" fill="#0066CC" opacity="0.8"/>
+      <rect x="124" y="206" width="4" height="4" rx="1" fill="#0066CC" opacity="0.8"/>
+    </g>
+
+    <!-- Top center items -->
+    <g>
+      <rect x="228" y="202" width="18" height="18" rx="2" fill="#FFFFFF" opacity="0.6"/>
+      <rect x="232" y="206" width="4" height="4" rx="1" fill="#0066CC" opacity="0.8"/>
+      <rect x="240" y="206" width="4" height="4" rx="1" fill="#0066CC" opacity="0.8"/>
+    </g>
+
+    <g>
+      <rect x="250" y="202" width="18" height="18" rx="2" fill="#FFFFFF" opacity="0.6"/>
+      <rect x="254" y="206" width="4" height="4" rx="1" fill="#0066CC" opacity="0.8"/>
+      <rect x="262" y="206" width="4" height="4" rx="1" fill="#0066CC" opacity="0.8"/>
+    </g>
+  </g>
+
+  <!-- Barcode symbol (right side accent) -->
+  <g id="barcode-accent" opacity="0.8">
+    <rect x="390" y="180" width="3" height="50" fill="#00D4FF"/>
+    <rect x="398" y="180" width="2" height="50" fill="#00D4FF"/>
+    <rect x="404" y="180" width="4" height="50" fill="#00D4FF"/>
+    <rect x="412" y="180" width="2" height="50" fill="#00D4FF"/>
+  </g>
+
+  <!-- Checkmark accent (completion/tracking) -->
+  <g id="checkmark" opacity="0.9">
+    <circle cx="395" cy="335" r="28" fill="#00D4FF" opacity="0.15"/>
+    <path d="M 380 335 L 390 345 L 410 325" stroke="#00D4FF" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Text: RETECH (optional - can be removed for icon-only use) -->
+  <text x="256" y="410" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle" fill="#0066CC">RETECH</text>
+  <text x="256" y="438" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#0099CC" letter-spacing="2">INVENTORY</text>
+</svg>

@@ -1,0 +1,147 @@
+.import-modal {
+  max-width: 900px;
+  width: 95%;
+}
+
+.upload-section {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.upload-section p {
+  margin-bottom: 1.5rem;
+  color: var(--gray-600);
+  font-size: 0.9375rem;
+}
+
+.file-input {
+  display: block;
+  width: 100%;
+  padding: 2rem;
+  border: 2px dashed var(--gray-300);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  background-color: var(--gray-50);
+  font-size: 0.875rem;
+  color: var(--gray-600);
+}
+
+.file-input:hover {
+  border-color: var(--primary-color);
+  background-color: rgba(59, 130, 246, 0.05);
+}
+
+.file-name {
+  margin-top: 1rem;
+  font-weight: 500;
+  color: var(--primary-color);
+  font-size: 0.9375rem;
+}
+
+.sheet-selection {
+  padding: 1rem;
+}
+
+.sheet-selection p {
+  margin-bottom: 1rem;
+  color: var(--gray-600);
+  font-size: 0.9375rem;
+}
+
+.sheet-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sheet-option {
+  display: flex;
+  align-items: center;
+  padding: 0.875rem 1rem;
+  border: 2px solid var(--gray-200);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  background-color: white;
+}
+
+.sheet-option:hover {
+  border-color: var(--primary-color);
+  background-color: rgba(59, 130, 246, 0.05);
+}
+
+.sheet-option input[type="radio"] {
+  margin-right: 0.75rem;
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--primary-color);
+  cursor: pointer;
+}
+
+.sheet-option span {
+  font-weight: 500;
+  color: var(--gray-700);
+  font-size: 0.9375rem;
+}
+
+.preview-section h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--gray-900);
+}
+
+.preview-info {
+  color: var(--gray-600);
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+
+.preview-table-container {
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.preview-table {
+  width: 100%;
+  font-size: 0.75rem;
+}
+
+.preview-table th,
+.preview-table td {
+  padding: 0.625rem 0.875rem;
+  white-space: nowrap;
+  text-align: left;
+}
+
+.preview-table th {
+  position: sticky;
+  top: 0;
+  background-color: var(--gray-100);
+  font-weight: 600;
+  color: var(--gray-600);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  z-index: 1;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.preview-table td {
+  border-bottom: 1px solid var(--border-color);
+  color: var(--gray-700);
+}
+
+.preview-table tbody tr:hover {
+  background-color: var(--gray-50);
+}
+
+.error-message {
+  color: var(--danger-color);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.9375rem;
+}
