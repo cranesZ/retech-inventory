@@ -121,7 +121,7 @@ const Layout: React.FC = () => {
               <button
                 onClick={() => {
                   setShowProfileMenu(false);
-                  navigate('/settings');
+                  navigate('/settings?tab=account');
                 }}
                 className="nav-item"
                 style={{

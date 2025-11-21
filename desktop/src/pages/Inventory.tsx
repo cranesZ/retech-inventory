@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Search, Loader2, AlertTriangle } from 'lucide-react';
 import { getDevices, saveDevice, deleteDevice } from '../services/storage';
 import { sickwAPI } from '../services/sickw-api';
 import type { Device } from '../types';
@@ -121,10 +122,10 @@ export default function Inventory() {
       await loadDevices();
 
       console.log('Import complete, devices loaded');
-      alert(`✅ Successfully imported ${importedDevices.length} devices!`);
+      alert(`Successfully imported ${importedDevices.length} devices!`);
     } catch (error) {
       console.error('Failed to import devices:', error);
-      alert(`❌ Failed to import devices: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      alert(`Failed to import devices: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   };
 
@@ -185,7 +186,7 @@ export default function Inventory() {
       await loadDevices();
 
       alert(
-        `✅ Device information updated!\n\n` +
+        `Device information updated!\n\n` +
         `Model: ${deviceInfo.model || 'N/A'}\n` +
         `Warranty: ${deviceInfo.warrantyStatus || 'N/A'}\n` +
         `iCloud Lock: ${deviceInfo.iCloudLock || 'N/A'}\n` +
@@ -303,7 +304,10 @@ export default function Inventory() {
         </div>
         <div className="page-content">
           <div className="empty-state-box" style={{ color: '#dc2626' }}>
-            <p>⚠️ Error loading devices: {error}</p>
+            <p style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <AlertTriangle size={20} color="#f59e0b" />
+              Error loading devices: {error}
+            </p>
             <button className="primary" onClick={loadDevices}>
               Retry
             </button>
@@ -414,7 +418,7 @@ export default function Inventory() {
                             disabled={lookingUpDeviceId === device.id}
                             title="Lookup device information via SICKW API"
                           >
-                            {lookingUpDeviceId === device.id ? '⏳' : '🔍'}
+                            {lookingUpDeviceId === device.id ? <Loader2 size={16} className="spin" /> : <Search size={16} />}
                           </button>
                         )}
                         <button
