@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import { signin as apiSignin, signup as apiSignup, signout as apiSignout, getProfile } from '../services/api';
 import type { SigninData, SignupData, UserProfile } from '../services/api';
 
@@ -71,14 +71,24 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       const response = await apiSignin(data);
 
-      // Store token and user
-      localStorage.setItem('authToken', response.access_token);
-      localStorage.setItem('user', JSON.stringify(response.user));
+      // Extract access token from session
+      const accessToken = response.session?.access_token;
+      if (!accessToken) {
+        throw new Error('No access token received');
+      }
 
-      setToken(response.access_token);
-      setUser(response.user);
+      // Store token temporarily
+      localStorage.setItem('authToken', accessToken);
+      setToken(accessToken);
+
+      // Fetch full profile with role
+      const profile = await getProfile();
+      localStorage.setItem('user', JSON.stringify(profile));
+      setUser(profile);
     } catch (error) {
       console.error('Login failed:', error);
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('user');
       throw error;
     }
   };
@@ -88,14 +98,26 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       const response = await apiSignup(data);
 
-      // Store token and user
-      localStorage.setItem('authToken', response.access_token);
-      localStorage.setItem('user', JSON.stringify(response.user));
+      // Extract access token from session (if available)
+      const accessToken = response.session?.access_token;
 
-      setToken(response.access_token);
-      setUser(response.user);
+      if (accessToken) {
+        // Store token temporarily
+        localStorage.setItem('authToken', accessToken);
+        setToken(accessToken);
+
+        // Fetch full profile with role
+        const profile = await getProfile();
+        localStorage.setItem('user', JSON.stringify(profile));
+        setUser(profile);
+      } else {
+        // No session (email confirmation required)
+        throw new Error('Please check your email to confirm your account');
+      }
     } catch (error) {
       console.error('Registration failed:', error);
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('user');
       throw error;
     }
   };

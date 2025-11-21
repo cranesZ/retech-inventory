@@ -10,6 +10,7 @@ import {
   TrendingUp,
   BarChart3,
   Settings,
+  Shield,
   LogOut
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
@@ -23,6 +24,9 @@ const Layout: React.FC = () => {
     await logout();
     navigate('/login');
   };
+  // Check if user is admin (role can be at user.role or user.profile.role)
+  const isAdmin = user?.role === 'admin' || user?.profile?.role === 'admin';
+
   const navItems = [
     { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
     { to: '/inventory', icon: Smartphone, label: 'Inventory' },
@@ -32,6 +36,7 @@ const Layout: React.FC = () => {
     { to: '/invoices', icon: FileText, label: 'Invoices' },
     { to: '/offer-analysis', icon: TrendingUp, label: 'Offer Analysis' },
     { to: '/reports', icon: BarChart3, label: 'Reports' },
+    ...(isAdmin ? [{ to: '/admin', icon: Shield, label: 'Admin Panel' }] : []),
     { to: '/settings', icon: Settings, label: 'Settings' },
   ];
 

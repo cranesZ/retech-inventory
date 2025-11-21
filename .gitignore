@@ -58,3 +58,5 @@ uploads/
 # Supabase
 supabase/.branches
 supabase/.temp
+.npm-cache/
+desktop/release/

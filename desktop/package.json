@@ -1,7 +1,7 @@
 {
   "name": "retech-inventory",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "type": "module",
   "main": "dist-electron/main.cjs",
   "description": "Retech Inventory Management System - Desktop Application",
@@ -9,13 +9,17 @@
     "name": "Retech Team",
     "email": "support@retech.example.com"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cranesZ/retech-inventory.git"
+  },
   "scripts": {
     "dev": "concurrently \"npm run dev:vite\" \"npm run dev:electron\"",
     "dev:vite": "vite",
     "dev:electron": "wait-on http://localhost:5173 && cross-env NODE_ENV=development electron .",
     "build": "tsc -b && vite build && npm run build:electron",
     "build:electron": "tsc -p tsconfig.electron.json && node -e \"const fs = require('fs'); fs.renameSync('dist-electron/main.js', 'dist-electron/main.cjs'); fs.renameSync('dist-electron/preload.js', 'dist-electron/preload.cjs');\"",
-    "build:icons": "node create-icons-simple.js",
+    "build:icons": "node create-icons-simple.cjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "package": "npm run build && electron-builder build --mac --win --linux",
@@ -63,6 +67,12 @@
       "buildResources": "build",
       "output": "release"
     },
+    "publish": {
+      "provider": "github",
+      "owner": "cranesZ",
+      "repo": "retech-inventory",
+      "releaseType": "release"
+    },
     "mac": {
       "target": [
         "dmg",
@@ -97,12 +107,7 @@
         "nsis",
         "portable"
       ],
-      "icon": "build/icon.ico",
-      "certificateFile": null,
-      "certificatePassword": null,
-      "signingHashAlgorithms": [
-        "sha256"
-      ]
+      "icon": "build/icon.ico"
     },
     "nsis": {
       "artifactName": "${productName}-Setup-${version}.exe",

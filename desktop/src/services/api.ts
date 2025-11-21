@@ -13,7 +13,9 @@ async function handleResponse<T>(response: Response): Promise<T> {
     const errorData = await response.json().catch(() => ({ message: 'Request failed' }));
     throw new Error(errorData.message || `HTTP ${response.status}: ${response.statusText}`);
   }
-  return response.json();
+  const json = await response.json();
+  // Extract data from success wrapper
+  return json.data || json;
 }
 
 // Generic request helper with auth
@@ -23,9 +25,9 @@ async function apiRequest<T>(
 ): Promise<T> {
   const token = getAuthToken();
 
-  const headers: HeadersInit = {
+  const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    ...options.headers,
+    ...(options.headers as Record<string, string> || {}),
   };
 
   if (token) {
@@ -56,20 +58,32 @@ export interface SigninData {
 }
 
 export interface AuthResponse {
-  access_token: string;
   user: {
     id: string;
     email: string;
-    name: string;
-    role: string;
+    user_metadata?: {
+      full_name?: string;
+    };
   };
+  session: {
+    access_token: string;
+    token_type: string;
+    expires_in: number;
+    refresh_token: string;
+  } | null;
 }
 
 export interface UserProfile {
   id: string;
   email: string;
-  name: string;
+  full_name: string;
   role: string;
+  profile?: {
+    role: string;
+    full_name: string;
+    is_active: boolean;
+    two_factor_enabled: boolean;
+  };
 }
 
 export async function signup(data: SignupData): Promise<AuthResponse> {
@@ -146,6 +160,55 @@ export async function deleteDevice(id: string): Promise<{ message: string }> {
   return apiRequest<{ message: string }>(`/devices/${id}`, {
     method: 'DELETE',
   });
+}
+
+// ============================================
+// ADMIN API FUNCTIONS
+// ============================================
+
+export async function getAllUsers(): Promise<any> {
+  return apiRequest('/admin/users');
+}
+
+export async function createUser(data: {
+  email: string;
+  password: string;
+  full_name: string;
+  role: string;
+}): Promise<any> {
+  return apiRequest('/admin/users', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
+export async function updateUserRole(userId: string, role: string): Promise<any> {
+  return apiRequest(`/admin/users/${userId}/role`, {
+    method: 'PUT',
+    body: JSON.stringify({ role }),
+  });
+}
+
+export async function activateUser(userId: string): Promise<any> {
+  return apiRequest(`/admin/users/${userId}/activate`, {
+    method: 'PUT',
+  });
+}
+
+export async function deactivateUser(userId: string): Promise<any> {
+  return apiRequest(`/admin/users/${userId}/deactivate`, {
+    method: 'PUT',
+  });
+}
+
+export async function deleteUser(userId: string): Promise<any> {
+  return apiRequest(`/admin/users/${userId}`, {
+    method: 'DELETE',
+  });
+}
+
+export async function getAdminStats(): Promise<any> {
+  return apiRequest('/admin/stats');
 }
 
 // ============================================

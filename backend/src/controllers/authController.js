@@ -14,16 +14,31 @@ export async function signup(req, res) {
       });
     }
 
+    // Determine if we should auto-confirm users (for development/desktop app)
+    const autoConfirm = process.env.AUTO_CONFIRM_USERS === 'true';
+
+    // Get site URL, ensuring it's not localhost for production
+    const siteUrl = process.env.SITE_URL || 'http://localhost:5173';
+    const isLocalhost = siteUrl.includes('localhost') || siteUrl.includes('127.0.0.1');
+
+    // Prepare signup options
+    const signupOptions = {
+      data: {
+        full_name: full_name || ''
+      },
+      emailRedirectTo: siteUrl
+    };
+
+    // Auto-confirm if enabled or if using localhost (desktop app development)
+    if (autoConfirm || (isLocalhost && process.env.NODE_ENV === 'development')) {
+      signupOptions.emailRedirectTo = undefined; // Don't send verification email
+    }
+
     // Sign up user
     const { data: authData, error: authError } = await supabase.auth.signUp({
       email,
       password,
-      options: {
-        data: {
-          full_name: full_name || ''
-        },
-        emailRedirectTo: process.env.SITE_URL || 'http://localhost:5173'
-      }
+      options: signupOptions
     });
 
     if (authError) {
@@ -33,12 +48,19 @@ export async function signup(req, res) {
       });
     }
 
+    // Determine message based on confirmation status
+    const needsConfirmation = !autoConfirm && !isLocalhost;
+    const message = needsConfirmation
+      ? 'User created successfully. Please check your email for confirmation.'
+      : 'User created successfully. You can now log in.';
+
     res.status(201).json({
       success: true,
-      message: 'User created successfully. Please check your email for confirmation.',
+      message,
       data: {
         user: authData.user,
-        session: authData.session
+        session: authData.session,
+        needsEmailConfirmation: needsConfirmation
       }
     });
   } catch (error) {
@@ -267,15 +289,27 @@ export async function resetPassword(req, res) {
   try {
     const { email } = req.body;
 
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${process.env.SITE_URL || 'http://localhost:5173'}/reset-password`
-    });
+    // Get site URL for redirect
+    const siteUrl = process.env.SITE_URL || 'http://localhost:5173';
+    const isLocalhost = siteUrl.includes('localhost') || siteUrl.includes('127.0.0.1');
+
+    // Prepare reset options
+    const resetOptions = {
+      redirectTo: `${siteUrl}/reset-password`
+    };
+
+    // If using localhost in development, log a warning
+    if (isLocalhost && process.env.NODE_ENV === 'development') {
+      console.warn('⚠️  Password reset email will redirect to localhost. For production, set SITE_URL environment variable to your hosted URL.');
+    }
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, resetOptions);
 
     if (error) throw error;
 
     res.json({
       success: true,
-      message: 'Password reset email sent'
+      message: 'Password reset email sent. Please check your email.'
     });
   } catch (error) {
     console.error('Error resetting password:', error);

@@ -14,6 +14,7 @@ import OfferAnalysis from './pages/OfferAnalysis';
 import Reports from './pages/Reports';
 import Settings from './pages/Settings';
 import Login from './pages/Login';
+import { Admin } from './pages/Admin';
 
 // Protected Route wrapper
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -57,6 +58,7 @@ const App: React.FC = () => {
           <Route path="invoices/new" element={<InvoiceCreate />} />
           <Route path="offer-analysis" element={<OfferAnalysis />} />
           <Route path="reports" element={<Reports />} />
+          <Route path="admin" element={<Admin />} />
           <Route path="settings" element={<Settings />} />
         </Route>
       </Routes>

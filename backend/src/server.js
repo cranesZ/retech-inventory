@@ -6,6 +6,7 @@ import { initializeStorage } from './config/supabase.js';
 import devicesRouter from './routes/devices.js';
 import authRouter from './routes/auth.js';
 import sickwRouter from './routes/sickw.js';
+import adminRouter from './routes/admin.js';
 
 // Load environment variables
 dotenv.config();
@@ -58,6 +59,7 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRouter);
 app.use('/api/devices', devicesRouter);
 app.use('/api/sickw', sickwRouter);
+app.use('/api/admin', adminRouter);
 
 // Root route
 app.get('/', (req, res) => {

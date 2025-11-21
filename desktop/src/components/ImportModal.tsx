@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import * as XLSX from 'xlsx';
-import type { Device } from '../types';
+import type { Device, DeviceGrade } from '../types';
 import './ImportModal.css';
 
 interface ImportModalProps {
@@ -63,6 +63,25 @@ export function ImportModal({ onImport, onCancel }: ImportModalProps) {
     return '';
   };
 
+  const mapGrade = (gradeString: string): DeviceGrade | undefined => {
+    if (!gradeString) return undefined;
+    const normalized = gradeString.toUpperCase().trim();
+    const gradeMap: Record<string, DeviceGrade> = {
+      'A+': 'A+',
+      'APLUS': 'A+',
+      'A PLUS': 'A+',
+      'A': 'A',
+      'B': 'B',
+      'C': 'C',
+      'D': 'D',
+      'UNGRADED': 'Ungraded',
+      'UNKNOWN': 'Ungraded',
+      'N/A': 'Ungraded',
+      'NA': 'Ungraded',
+    };
+    return gradeMap[normalized] || undefined;
+  };
+
   const handleImport = async () => {
     if (!file || !selectedSheet) {
       console.error('Import failed: missing file or sheet');
@@ -92,7 +111,7 @@ export function ImportModal({ onImport, onCancel }: ImportModalProps) {
         esn: getField(row, 'ESN', 'esn', 'Esn'),
         imei: getField(row, 'IMEI', 'imei', 'Imei'),
         quantity: parseInt(getField(row, 'Quantity', 'quantity', 'QUANTITY', 'Qty', 'qty', 'QTY', 'Count', 'count') || '1') || 1,
-        grade: getField(row, 'Grade', 'grade', 'GRADE', 'Condition', 'condition'),
+        grade: mapGrade(getField(row, 'Grade', 'grade', 'GRADE', 'Condition', 'condition')),
         damages: getField(row, 'Damages', 'damages', 'DAMAGES', 'Damage', 'damage', 'Issues', 'issues'),
         notes: getField(row, 'Notes', 'notes', 'NOTES', 'Galaxy Notes', 'Comments', 'comments', 'Note', 'note'),
         pricePaid: parseFloat(getField(row, 'Price Paid', 'price paid', 'PRICE PAID', 'pricePaid', 'Cost', 'cost', 'Purchase Price', 'purchase price') || '0') || undefined,
